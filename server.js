@@ -1,23 +1,16 @@
 const express = require('express');
-const mysql = require('mysql');
+const bodyParser = require("body-parser");
 
 const app = express();
 
-//Create connection
-const db = mysql.createConnection({
-    host     : 'localhost',
-    user     : 'root',
-    password : '',
-    database : 'nodemysql'
-});
 
 // Connect
-db.connect((err) => {
-    if(err) {
-        throw err;
-    }
-    console.log('MySQL connected...')
-});
+// db.connect((err) => {
+//     if(err) {
+//         throw err;
+//     }
+//     console.log('MySQL connected...')
+// });
 
 // Create DB
 app.get('/createdb', (req, res) => {
@@ -39,6 +32,18 @@ app.get('/createtableusers', (req, res) => {
     })
 });
 
+// parse requests of content-type: application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type: application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// simple route
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome Port 3000." });
+});
+
+require("./app/routes/user.routes.js")(app);
 
 app.listen('3000', () => {
     console.log('Server running on port 3000');
