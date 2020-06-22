@@ -54,8 +54,8 @@ sql.query("SELECT * FROM users", (err, res) => {
 
 User.updateById = (id, user, result) => {
 sql.query(
-    "UPDATE users SET email = ?, name = ?, active = ? WHERE id = ?",
-    [user.email, user.name, user.active, id],
+    "UPDATE users SET email = ?, name = ?, password = ? WHERE id = ?",
+    [user.email, user.name, user.password, id],
     (err, res) => {
     if (err) {
         console.log("error: ", err);
